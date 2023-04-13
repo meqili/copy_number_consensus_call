@@ -63,19 +63,14 @@ args = parser.parse_args()
 new_mat = pd.read_csv(args.file, delimiter="\t", header=[0], keep_default_na=False)
 
 ## Take out the three columns to be operated on and apply the "remove_dup_and_null" function on those columns
-new_mat["gatk_CNVs"] = [
-    remove_dup_null_outside(c, s, e)
-    for c, s, e in zip(new_mat["gatk_CNVs"], new_mat["start"], new_mat["end"])
-]
-
 new_mat["cnvkit_CNVs"] = [
     remove_dup_null_outside(c, s, e)
     for c, s, e in zip(new_mat["cnvkit_CNVs"], new_mat["start"], new_mat["end"])
 ]
 
-new_mat["freec_CNVs"] = [
+new_mat["cnvnator_CNVs"] = [
     remove_dup_null_outside(c, s, e)
-    for c, s, e in zip(new_mat["freec_CNVs"], new_mat["start"], new_mat["end"])
+    for c, s, e in zip(new_mat["cnvnator_CNVs"], new_mat["start"], new_mat["end"])
 ]
 
 

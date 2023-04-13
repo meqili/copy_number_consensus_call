@@ -16,10 +16,10 @@
 
 ################# Output format ###############
 
-#   column1    column2     column3     column4                     column5                     column6                  column7     column8     column9
+#   column1    column2     column3     column4                     column5                     column6      column7     column8
 #
-#   chr#       consensus   consensus   raw gatk coordinates       raw cnvkit coordinates      raw freec coordinates    cnv type    sample      filename
-#              start_pos   end_pos     that made up this CNV       that made up this CNV       that made up this CNV                name
+#   chr#       consensus   consensus   raw cnvkit coordinates      raw cnvnator coordinates    cnv type     sample      filename
+#              start_pos   end_pos     that made up this CNV       that made up this CNV                    name
 
 ################# ASSUMPTION ###############
 
@@ -196,7 +196,7 @@ def generate_consensus(list1_name, list1, list2_name, list2):
                     ## Column 5 is cnvkit's raw coordinates
                     ## Column 6 is cnvnator's raw coordinates
 
-                    ## if the files input are CNVKIT and list1_name, put info in column 5 and 6, 4th column is null
+                    ## if the files input are CNVKIT and list1_name, put info in column 4 and 5
                     if (list1_name == "cnvkit" and list2_name == "cnvnator") or (
                         list1_name == "cnvnator" and list2_name == "cnvkit"
                     ):
@@ -204,7 +204,6 @@ def generate_consensus(list1_name, list1, list2_name, list2):
                             chr_list1,
                             str(chrom_start),
                             str(chrom_end),
-                            "NULL",
                             str(cnv_list1).strip(","),
                             list2_chr_str_end.strip(","),
                             m[-1],
