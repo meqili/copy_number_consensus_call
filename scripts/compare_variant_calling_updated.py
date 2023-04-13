@@ -194,39 +194,11 @@ def generate_consensus(list1_name, list1, list2_name, list2):
                     ## Format the output consensus CNV
                     ## Column 4 is gatk's raw coordinates
                     ## Column 5 is cnvkit's raw coordinates
-                    ## Column 6 is freec's raw coordinates
+                    ## Column 6 is cnvnator's raw coordinates
 
-                    ## if the files input are gatk and CNVKIT, put info in column 4 and 5, 6th column is null
-                    if (list1_name == "gatk" and list2_name == "cnvkit") or (
-                        list1_name == "cnvkit" and list2_name == "gatk"
-                    ):
-                        overlap_chrom = [
-                            chr_list1,
-                            str(chrom_start),
-                            str(chrom_end),
-                            str(cnv_list1).strip(","),
-                            list2_chr_str_end.strip(","),
-                            "NULL",
-                            m[-1],
-                        ]
-
-                    ## if the files input are gatk and FREEC, put info in column 4 and 6, 5th column is null
-                    elif (list1_name == "gatk" and list2_name == "freec") or (
-                        list1_name == "freec" and list2_name == "gatk"
-                    ):
-                        overlap_chrom = [
-                            chr_list1,
-                            str(chrom_start),
-                            str(chrom_end),
-                            str(cnv_list1).strip(","),
-                            "NULL",
-                            list2_chr_str_end.strip(","),
-                            m[-1],
-                        ]
-
-                    ## if the files input are CNVKIT and FREEC, put info in column 5 and 6, 4th column is null
-                    elif (list1_name == "cnvkit" and list2_name == "freec") or (
-                        list1_name == "freec" and list2_name == "cnvkit"
+                    ## if the files input are CNVKIT and list1_name, put info in column 5 and 6, 4th column is null
+                    if (list1_name == "cnvkit" and list2_name == "cnvnator") or (
+                        list1_name == "cnvnator" and list2_name == "cnvkit"
                     ):
                         overlap_chrom = [
                             chr_list1,
@@ -274,26 +246,15 @@ def save_to_file(output_file_content, output_path, sample_name):
 
 ## Define parser for the input file
 parser = argparse.ArgumentParser(
-    description="""This script takes in 3 bed files, each from one of the 3 callers
+    description="""This script takes in 2 bed files, each from one of the 2 callers
                                                  and find common CNVs between two files at a time."""
 )
-parser.add_argument("--gatk", required=True, help="path to the gatk file")
 parser.add_argument("--cnvkit", required=True, help="path to the cnvkit file")
-parser.add_argument("--freec", required=True, help="path to the freec file")
+parser.add_argument("--cnvnator", required=True, help="path to the cnvnator file")
 parser.add_argument(
-    "--gatk_cnvkit",
+    "--cnvkit_cnvnator",
     required=True,
-    help="path of the output consensus between gatk and cnvkit",
-)
-parser.add_argument(
-    "--gatk_freec",
-    required=True,
-    help="path of the output consensus between gatk and freec",
-)
-parser.add_argument(
-    "--cnvkit_freec",
-    required=True,
-    help="path of the output consensus between cnvkit and freec",
+    help="path of the output consensus between cnvkit and cnvnator",
 )
 parser.add_argument(
     "--sample", default="no_sample", help="sample name to use in the file"
@@ -304,7 +265,7 @@ args = parser.parse_args()
 
 ## Define a list of input callers
 
-input_callers = ["gatk", "cnvkit", "freec"]
+input_callers = ["cnvkit", "cnvnator"]
 input_content = dict()
 for caller in input_callers:
     ## Read in the input files as dictionaries
@@ -338,7 +299,7 @@ for caller1, caller2 in caller_pairs:
     consensus_list = generate_consensus(caller1, list1, caller2, list2)
 
     ## Add the consensus list into a final list that hold the
-    ## content of 3 files - gatk_cnvkit , gatk_freec, and cnvkit_freec
+    ## content of 1 files - cnvkit_cnvnator
     fin_list.append(consensus_list)
 
 
