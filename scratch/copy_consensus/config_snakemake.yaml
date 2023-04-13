@@ -1,0 +1,7 @@
+samples:
+  BS_6M8T4W39:
+cnvkit_ext: .cnvkit
+cnvnator_ext: .cnvnator
+scripts: /Users/liq3/copy_number_consensus_call/scripts
+scratch: scratch/copy_consensus
+size_cutoff: 3000
