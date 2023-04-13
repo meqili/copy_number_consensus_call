@@ -1,4 +1,3 @@
-
 ## Define the wildcards to use in the file names.
 wildcard_constraints:
   caller = "cnvkit|cnvnator",
@@ -27,7 +26,7 @@ rule cnvnator_filter:
         cnvnator_dup= scratch_loc + "interim/{sample}.cnvnator.dup.bed"
     params:
         ## Take parameters from the config file and assign them into params for convinient use in the Shell section
-        SIZE_CUTOFF=str(config["size_cutoff"])
+        SIZE_CUTOFF=str(config["size_cutoff"]),
     shell:
         ## The awk command line is to filter out the raw file.
         ## The end result has 8 columns
@@ -45,7 +44,7 @@ rule cnvnator_filter:
         """awk '$1~/duplication/ {{print $10,$11,$12,$3,"NA","NA","NA","DUP"}}' {input.events} """
         """ | awk '{{if ($4 > {params.SIZE_CUTOFF}){{print}}}}' """
         """ | sort -k1,1 -k2,2n """
-        """ | tr [:blank:] '\t' > {output.cnvnator_dup} && """
+        """ | tr [:blank:] '\t' > {output.cnvnator_dup}"""
 
 rule cnvkit_filter:
     input:
