@@ -5,10 +5,8 @@
 # There are 3 dictionaries within the bigger dictionary , each dictionary is the content of a singular caller method.
 
 # For-loops are used to loop through these 3 files to do pair comparison of the 3 files.
-# We compare gatk - cnvkit
-# then  gatk - freec
-# and finally cnvkit - freec
-# We'll end up with 3 output files.
+# We compare cnvkit - cnvnator
+# We'll end up with 2 output files.
 
 # The principle for finding consensus CNVs is that if any two CNVs overlap at least 50% reciprocally,
 # OR any CNV in a caller overlaps 90% or more of a CNV region in another caller

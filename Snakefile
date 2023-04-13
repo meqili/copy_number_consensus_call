@@ -179,13 +179,13 @@ rule combine_merge_paired_cnv:
     threads: 1
     shell:
         ## Combine the input file, sort and output to one file
-        ## Columns 4, 5, and 6 hold the original CNV calls from CNVkit and cnvnator, respectively.
+        ## Columns 4 and 5 hold the original CNV calls from CNVkit and cnvnator, respectively.
         ## We want to retain info in these columns when merging these files so we use COLLAPSE to keep the information in these columns
-        ## Columns 7 and 8 are the CNVtype (DEL, DUP) and Sample_name, respectively.
-        ## AT THIS POINT, these columns of the input files hold the same values, thus we perform DISTINCT, which is to take the unique of columns 7 and 8.
-        ## As for column 9, this column holds the files that were merged to get a specific CNV. We want to keep all information here so we COLLAPSE it.
+        ## Columns 6 and 7 are the CNVtype (DEL, DUP) and Sample_name, respectively.
+        ## AT THIS POINT, these columns of the input files hold the same values, thus we perform DISTINCT, which is to take the unique of columns 6 and 7.
+        ## As for column 8, this column holds the files that were merged to get a specific CNV. We want to keep all information here so we COLLAPSE it.
         "sort -k1,1 -k2,2n {input.cnvkit_cnvnator} "
-        "| bedtools merge -c 4,5,6,7,8,9 -o collapse,collapse,collapse,distinct,distinct,collapse "
+        "| bedtools merge -c 4,5,6,7,8 -o collapse,collapse,distinct,distinct,collapse "
         "> {output.merged}"
 
 rule remove_inset_calls:
