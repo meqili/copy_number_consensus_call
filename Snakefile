@@ -267,7 +267,7 @@ rule merge_all:
         ## Add a header and combine all of the files.
         shell("echo -e 'chrom\tstart\tend\tcnvkit_CNVs\tcnvnator_CNVs\tCNV_type\tBiospecimen' > {output}")
         for file in input:
-            shell("cut -f 1-8 {file} >> {output}")
+            shell("cut -f 1-7 {file} >> {output}")
 
 
 rule clean_output:
