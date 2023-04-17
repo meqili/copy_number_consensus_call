@@ -119,12 +119,12 @@ segmean_function <- if (opts$segmean_method == "weight_mean"){
 # Calculate summary stats from merged CNV calls. \
 cnvs <- cnvs %>%
   dplyr::mutate(cnvkit_df = purrr::map(cnvkit_CNVs, segstrings_to_df),
-                freec_df = purrr::map(freec_CNVs, segstrings_to_df),
+                cnvnator_df = purrr::map(cnvnator_CNVs, segstrings_to_df),
                 segmean = purrr::map_dbl(cnvkit_df, segmean_function),
                 cnvkit_cn = purrr::map_dbl(cnvkit_df, copies_wmedian),
-                freec_cn = purrr::map_dbl(freec_df, copies_wmedian),
-                copynum = ifelse(is.finite(freec_cn), # use freec if available
-                                 freec_cn, cnvkit_cn), #otherwise use cnvkit
+                cnvnator_cn = purrr::map_dbl(cnvnator_df, copies_wmedian),
+                copynum = ifelse(is.finite(cnvnator_cn), # use cnvnator if available
+                                 cnvnator_cn, cnvkit_cn), #otherwise use cnvkit
                 num.mark = NA)
 
 
