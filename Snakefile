@@ -67,11 +67,11 @@ rule cnvkit_filter:
         ## The second awk filters the CNV length, and add in the CNV type
         ## The sort command sorts the first digit of chromosome number numerically
         ## The last pipe is to introduce tab into the file and output file name.
-        """awk '$6<2 {{print $2,$3,$4,($4-$3 + 1),$7,"NA",$6,"DEL"}}' {input.events} """
+        """awk '$7<2 {{print $2,$3,$4,($4-$3 + 1),$7,"NA",$6,"DEL"}}' {input.events} """
         """ | awk '{{if ($4 > {params.SIZE_CUTOFF}){{print}}}}' """
         """ | sort -k1,1 -k2,2n """
         """ | tr [:blank:] '\t' > {output.cnvkit_del} && """
-        """awk '$6>2 {{print $2,$3,$4,($4-$3 + 1),$7,"NA",$6,"DUP"}}' {input.events} """
+        """awk '$7>2 {{print $2,$3,$4,($4-$3 + 1),$7,"NA",$6,"DUP"}}' {input.events} """
         """ | awk '{{if ($4 > {params.SIZE_CUTOFF}){{print}}}}' """
         """ | sort -k1,1 -k2,2n """
         """ | tr [:blank:] '\t' > {output.cnvkit_dup}"""

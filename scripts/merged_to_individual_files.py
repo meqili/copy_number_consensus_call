@@ -8,7 +8,7 @@ import argparse
 import os
 
 # Related third party
-import numpy as np
+# import numpy as np
 import pandas as pd
 
 ## Define the callers and the extension to give the intermediate files
@@ -30,7 +30,8 @@ parser.add_argument(
     help="path for the table of sample-caller outputs removed and not called for too many CNVs",
 )
 parser.add_argument(
-    "--maxcnvs", default=2500, help="samples with more than 2500 cnvs are set to blank"
+    "--maxcnvs", type=int,
+    default=2500, help="samples with more than 2500 cnvs are set to blank"
 )
 parser.add_argument("--cnvsize", default=3000, help="cnv cutoff size in base pairs")
 

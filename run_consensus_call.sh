@@ -12,6 +12,7 @@ cd "$script_directory" || exit
 
 
 SCRATCHDIR=scratch/copy_consensus
+rm -rf $SCRATCHDIR results
 # make directories:
 mkdir -p $SCRATCHDIR
 mkdir -p results
@@ -20,12 +21,13 @@ mkdir -p results
 ## Each directory with individual sample files.
 
 python3 scripts/merged_to_individual_files.py \
-    --sample BS_6M8T4W39 \
-    --cnvnator data/*.cnvnator_call.txt \
-    --cnvkit data/*.call.ballele_call.cns.seg \
+    --sample BS_88GCNYAD \
+    --cnvnator ../data/BS_88GCNYAD/*.cnvnator_call.txt \
+    --cnvkit ../data/BS_88GCNYAD/*.call.ballele_call.cns.seg \
     --snake $SCRATCHDIR/config_snakemake.yaml \
     --scratch $SCRATCHDIR \
-    --uncalled results/uncalled_samples.tsv
+    --uncalled results/uncalled_samples.tsv \
+    --maxcnvs 20000
 
 
 ## Run the Snakemake pipeline
